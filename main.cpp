@@ -1,3 +1,4 @@
+#include "imagefilter.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -6,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    Mat image = imread("/home/kamen/Genshin-Impact-Raiden-Shogun-thumb.png");
+    Mat image = imread("/home/kamen/git/Cpp-paint/lenna.png", IMREAD_COLOR);
     if (image.empty())
     {
         cout << "Could not open or find the image" << endl;
@@ -14,10 +15,16 @@ int main()
         return -1;
     }
 
-    String WindowName = "Raiden EI";
+    ImageFilter blurImg{"/home/kamen/git/Cpp-paint/lenna.png"};
+    blurImg.blur(ImageFilter::GAUSSIAN_BLUR);
+
+    String WindowName = "Lenna";
 
     namedWindow(WindowName);
+
     imshow(WindowName, image);
+    imshow("Output", blurImg.getOutput());
+
     waitKey(0);
     destroyAllWindows();
 

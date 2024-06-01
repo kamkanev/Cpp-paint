@@ -17,7 +17,7 @@ ImageFilter::ImageFilter(Mat image){
 void ImageFilter::blur(int type){
     switch (type) {
     case 0:
-        GaussianBlur(src, out, Size(15,15),0);
+        GaussianBlur(src, out, Size(15,15),1);
         break;
     case 1:
         medianBlur(src, out, 9);

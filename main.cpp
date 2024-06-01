@@ -7,26 +7,63 @@ using namespace std;
 
 int main()
 {
-    Mat image = imread("/home/kamen/git/Cpp-paint/lenna.png", IMREAD_COLOR);
-    if (image.empty())
-    {
-        cout << "Could not open or find the image" << endl;
-        cin.get(); //wait for any key press
-        return -1;
+    Mat image(500, 500, CV_8UC3,
+              Scalar(255, 255, 255));
+
+    // Check if the image is created
+    // successfully or not
+    if (!image.data) {
+        cout << "Could not open or "
+                  << "find the image\n";
+
+        return 0;
     }
 
-    ImageFilter blurImg{"/home/kamen/git/Cpp-paint/lenna.png"};
-    blurImg.blur(ImageFilter::GAUSSIAN_BLUR);
+    // Top Left Corner
+    int pbx = 30;
+    Point_<int> pt(30, 30);
 
-    String WindowName = "Lenna";
+    // Bottom Right Corner
+    Point_<int> pb(pbx, 255);
 
-    namedWindow(WindowName);
+    int thickness = 2;
 
-    imshow(WindowName, image);
-    imshow("Output", blurImg.getOutput());
+    // Drawing the Rectangle
 
-    waitKey(0);
-    destroyAllWindows();
+
+
+
+    // while(pb.x < 490){
+    //     pb.x ++;
+    //     circle(image, pb, 5, Scalar(255, 0, 0), thickness, LINE_8, 1);
+    //     rectangle(image, pt, pb,
+    //               Scalar(255, 0, 0),
+    //               thickness, LINE_8);
+    // }
+
+    //imwrite("/home/kamen/git/Cpp-paint/lenna2.png", image);
+    // Show our image inside a window
+    namedWindow("Output", WINDOW_NORMAL);
+
+    int tr1 = createTrackbar("PointTop","Output", &pb.x, 500);
+    cout<<tr1<<endl;
+
+    while(true){
+
+        rectangle(image, pt, pb,
+                  Scalar(255, 0, 0),
+                  thickness, LINE_8);
+
+        circle(image, pb, 5, Scalar(255, 0, 0), thickness, LINE_8, 1);
+
+        imshow("Output", image);
+
+        waitKey(1);
+
+
+        image = Mat(500, 500, CV_8UC3,
+                    Scalar(255, 255, 255));
+    }
 
     return 0;
 }

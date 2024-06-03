@@ -1,7 +1,7 @@
-#include <imagefilter.h>
+#include "imagefilter.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <mainwindow.h>
+#include "mainwindow.h"
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QInputDialog>

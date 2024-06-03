@@ -13,15 +13,14 @@ using namespace std;
 
 bool is_pressed = false;
 
-
-Mat canvas(1000, 1000, CV_8UC3,
-           Scalar(255, 255, 255));
-
 Mat drawimage(500, 500, CV_8UC3,
           Scalar(255, 255, 255));
 
 Mat image(500, 500, CV_8UC3,
           Scalar(255, 255, 255));
+
+int brushSize = 5;
+Scalar brushColor(255, 0, 0);
 
 void CallbackMouse (int event, int x, int y, int flags, void* userdata);
 
@@ -72,8 +71,8 @@ int main(int argc, char **argv)
     setMouseCallback(windowTitle, CallbackMouse, NULL);
 
     //create tracker
-    int tr1 = createTrackbar("PointTop", windowTitle, &pb.x, 500);
-    cout<<tr1<<endl;
+    //int tr1 = createTrackbar("PointTop", windowTitle, &pb.x, 500);
+    int tr2 = createTrackbar("Brush Size", windowTitle, &brushSize, 100);
 
     //create buttons
     //createButton("Make Square", OnSqrButtonClick, NULL, 0, 0);
@@ -96,7 +95,15 @@ int main(int argc, char **argv)
 
 
         //update
-        waitKey(1);
+        char key = waitKey(1);
+
+        if(key == 27){ //ESC
+            break;
+        }
+
+        if(key == 'r'){
+            brushColor = Scalar(0, 0, 255);
+        }
 
         //clean
          // image = Mat(500, 500, CV_8UC3,
@@ -127,7 +134,7 @@ void CallbackMouse (int event, int x, int y, int flags, void* userdata){
     {
        // cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
         if (is_pressed){
-            circle(drawimage, Point(x, y), 5, Scalar(255, 0, 0), FILLED, LINE_8, 0);
+            circle(drawimage, Point(x, y), brushSize, brushColor, FILLED, LINE_8, 0);
         }
 
     }

@@ -1,12 +1,8 @@
 # C++ Paint
 
-____
-
 ## Description
 
 This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/) and *widgets* using *QT*. It will be able to tun on any OS (*currently only Linux =<*). 
-
-
 
 ## Features
 
@@ -22,9 +18,7 @@ This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/
 
 - Others
   
-  <img src="./screenshots/free_draw.png" title="" alt="drawing" width="149"><img title="" src="./screenshots/square.png" alt="squaredrawing" width="150" data-align="inline">
-
----
+  <img title="" src="./screenshots/free_draw.png" alt="drawing" width="198"><img title="" src="./screenshots/square.png" alt="squaredrawing" width="196" data-align="inline">
 
 ## Key commands
 
@@ -38,13 +32,11 @@ This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/
 
 and the tracker on top of the window is for the **brush size**.
 
----
-
 ## Setup
 
 If you want to build the project in IDE and run it or make changes.
 
-You need to have [opencv](https://opencv.org/) installed as well as [QT]([Try Qt | Develop Applications and Embedded Systems | Qt](https://www.qt.io/download)).
+You need to have [opencv](https://opencv.org/) installed as well as [QT](https://www.qt.io/download).
 
 You can use othe IDE's but the import and build maight differ.
 
@@ -80,8 +72,8 @@ make
 ./Paint
 ```
 
-You can also open the project in [QT]([Try Qt | Develop Applications and Embedded Systems | Qt](https://www.qt.io/download)) and run it from there.
+You can also open the project in [Qt](https://www.qt.io/download) and run it from there.
 
 #### Windows and Mac
 
-For now you can only open and run the project in [QT]([Try Qt | Develop Applications and Embedded Systems | Qt](https://www.qt.io/download)).
+For now you can only open and run the project in [Qt](https://www.qt.io/download).

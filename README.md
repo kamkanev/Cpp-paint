@@ -22,13 +22,15 @@ This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/
 
 ## Key commands
 
-`1` **free drawing**
+`1` changes to **free drawing**
 
 `2` changes to the **square tool**
 
 `r` changes the color to **red**
 
 `b` chnages the color to **blue**
+
+`esc` exits the application (alco CTRL + C in terminal)
 
 and the tracker on top of the window is for the **brush size**.
 

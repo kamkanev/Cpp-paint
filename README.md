@@ -18,13 +18,15 @@ This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/
 
 - Others
   
-  <img title="" src="./screenshots/free_draw.png" alt="drawing" width="198"><img title="" src="./screenshots/square.png" alt="squaredrawing" width="196" data-align="inline">
+  <img title="" src="./screenshots/free_draw.png" alt="drawing" width="198"><img title="" src="./screenshots/square.png" alt="squaredrawing" width="196" data-align="inline"><img title="" src="screenshots/circle.png" alt="circles" width="198">
 
 ## Key commands
 
 `1` changes to **free drawing**
 
 `2` changes to the **square tool**
+
+`3` changes to the **circle tool**
 
 `r` changes the color to **red**
 

@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
             st->brushPointer->setColor(Scalar(0, 0, 255));
         } else if (key == 'b'){
             st->brushPointer->setColor(Scalar(255, 0, 0));
+        } else if (key == 'g'){
+            st->brushPointer->setColor(Scalar(0, 255, 0));
         }
 
         if(key == '1'){

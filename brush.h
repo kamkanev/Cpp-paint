@@ -3,7 +3,6 @@
 
 #include "opencv2/imgproc.hpp"
 #include<opencv2/core.hpp>
-#include <stdexcept>
 
 class Brush
 {
@@ -30,6 +29,7 @@ public:
     //const and vars
     const int MAXSIZE = 100;
     int* sizePointer = &size;
+    cv::Scalar* colorPointer = &color;
 private:
     cv::Scalar color;
     int size;

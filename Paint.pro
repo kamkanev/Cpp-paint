@@ -22,17 +22,26 @@ INCLUDEPATH += /usr/include/opencv4
 
 SOURCES += \
         brush.cpp \
+        canvas.cpp \
+        circletool.cpp \
+        freedrawing.cpp \
         imagefilter.cpp \
+        linetool.cpp \
         main.cpp \
-        mainwindow.cpp
+        rectdrawing.cpp \
+        shapetool.cpp
 
 HEADERS += \
     brush.h \
+    canvas.h \
+    circletool.h \
+    freedrawing.h \
     imagefilter.h \
-    mainwindow.h
+    linetool.h \
+    rectdrawing.h \
+    shapetool.h
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

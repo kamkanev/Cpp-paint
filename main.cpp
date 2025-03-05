@@ -1,9 +1,14 @@
 #include "imagefilter.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include "mainwindow.h"
+//#include "mainwindow.h"
 #include <cmath>
 #include "brush.h"
+#include "canvas.h"
+#include "freedrawing.h"
+#include "rectdrawing.h"
+#include "circletool.h"
+#include "linetool.h"
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QInputDialog>
@@ -14,20 +19,14 @@ using namespace cv;
 using namespace std;
 
 bool is_pressed = false;
-bool drawfree = true;
-bool shaping = false;
-bool circles = false;
 
-int r = 0;
+Canvas canvas = Canvas(500, 500, Scalar(255, 255, 255));
+FreeDrawing fd = FreeDrawing(true);
+RectDrawing rd = RectDrawing(true);
+CircleTool cl = CircleTool(true);
+LineTool lt = LineTool(true);
 
-Mat drawimage(500, 500, CV_8UC3,
-          Scalar(255, 255, 255));
-
-Mat image(500, 500, CV_8UC3,
-          Scalar(255, 255, 255));
-
-//Point_<int> pb(-1, -1);
-Point_<int> pn(0, 0);
+ShapeTool* st = &fd;
 
 void CallbackMouse (int event, int x, int y, int flags, void* userdata);
 
@@ -36,10 +35,9 @@ void OnSqrButtonClick(int state, void* userdata);
 int main(int argc, char *argv[])
 {
 
-    drawimage.copyTo(image);
     // Check if the image is created
     // successfully or not
-    if (!image.data) {
+    if (!canvas.getImage().data) {
         cout << "Could not open or "
                   << "find the image\n";
 
@@ -49,18 +47,26 @@ int main(int argc, char *argv[])
     //imwrite("/home/kamen/git/Cpp-paint/lenna2.png", image);
     // Show our image inside a window
 
-    //create brush
-    Brush br1 = Brush();
+    int fWid = 600, fHei = 1000;
+    cout<<"Enter Width and Height:" << endl;
+    cout<<"Width: ";
+    cin>> fWid;
+    cout<<"Height: ";
+    cin>> fHei;
+
+    // drawimage = Mat(fHei, fWid, CV_8UC3,
+    //                 Scalar(255, 255, 255));
+    // drawimage.copyTo(image);
 
     //WINDOW setup
     String windowTitle = "Paint";
     namedWindow(windowTitle, WINDOW_NORMAL);
-    setMouseCallback(windowTitle, CallbackMouse, &br1);
+    setMouseCallback(windowTitle, CallbackMouse);//&br1
 
 
     //create tracker
     //int tr1 = createTrackbar("PointTop", windowTitle, &pb.x, 500);
-    int tr2 = createTrackbar("Brush Size", windowTitle, br1.sizePointer, 100);
+    int tr2 = createTrackbar("Brush Size", windowTitle, st->getBrush().sizePointer, 100);
 
     //create buttons
     //createButton("Make Square", OnSqrButtonClick, NULL, 0, 0);
@@ -71,61 +77,45 @@ int main(int argc, char *argv[])
     //MainWindow mw;
     //mw.show();
 
-    while(true){
+    char key = 0;
+
+    while(key != 27 && getWindowProperty(windowTitle, WINDOW_AUTOSIZE) != -1){ //ESC or close window
 
         //input
 
-        //draw
+        //draw focus
+        st->focus(canvas.getImage());
 
-        if(shaping && br1.getMouse().x != -1){
-            rectangle(image, br1.getMouse(), pn,
-                      br1.getColor(),
-                      br1.getSize(), br1.getLineType());
-        }
-
-        if(circles && br1.getMouse().x != -1){
-            circle(image, br1.getMouse(), r, br1.getColor(), br1.getSize(), br1.getLineType());
-        }
-
-        // circle(image, pb, 5, Scalar(255, 0, 0), thickness, LINE_8, 1);
         //show
-
-        imshow(windowTitle , image);
+        imshow(windowTitle , canvas.getImage());
 
 
         //update
-        char key = waitKey(1);
-
-        if(key == 27){ //ESC
-            break;
-        }
+        key = waitKey(10);
 
         if(key == 'r'){
-            br1.setColor(Scalar(0, 0, 255));
+            st->brushPointer->setColor(Scalar(0, 0, 255));
         } else if (key == 'b'){
-            br1.setColor(Scalar(255, 0, 0));
+            st->brushPointer->setColor(Scalar(255, 0, 0));
         }
 
         if(key == '1'){
-            drawfree = true;
-            shaping = false;
-            circles = false;
+            st = &fd;
 
         } else if (key == '2'){
-            drawfree = false;
-            shaping = true;
-            circles = false;
+            st = &rd;
 
         } else if (key == '3'){
-            drawfree = false;
-            shaping = false;
-            circles = true;
+            st = &cl;
+        } else if (key == '4'){
+            st = &lt;
         }
 
         //clean
          // image = Mat(500, 500, CV_8UC3,
          //             Scalar(255, 255, 255));
-        drawimage.copyTo(image);
+        //drawimage.copyTo(image);
+        canvas.update();
     }
 
     return 0; //app.exec();
@@ -133,14 +123,12 @@ int main(int argc, char *argv[])
 
 void CallbackMouse (int event, int x, int y, int flags, void* userdata){
 
-    Brush* brush = reinterpret_cast<Brush*>(userdata);
+    //Brush* brush = reinterpret_cast<Brush*>(userdata);
 
     if  ( event == EVENT_LBUTTONDOWN )
     {
         is_pressed = true;
-        brush->updateMouse(x, y);
-        pn.x = x;
-        pn.y = y;
+        st->updateTool(x, y);
         //cout << "Left button of the mouse is pressed - position (" << x << ", " << y << ")" << endl;
 
     }
@@ -156,19 +144,8 @@ void CallbackMouse (int event, int x, int y, int flags, void* userdata){
     {
        // cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
         if (is_pressed){
-            pn.x = x;
-            pn.y = y;
-            // circle(drawimage, Point(x, y), brushSize, brushColor, FILLED, LINE_8, 0);
-            if(drawfree){
-                line(drawimage, brush->getMouse(), pn, brush->getColor(), brush->getSize(), brush->getLineType());
-                brush->updateMouse(pn.x, pn.y);
-            } else if (shaping){
-                // rectangle(image, pb, pn,
-                //           brushColor,
-                //           brushSize, LINE_8);
-            } else if (circles){
-                r = sqrt(pow(fabs(brush->getMouse().x - pn.x),2) + pow(fabs(brush->getMouse().y - pn.y),2));
-            }
+
+            st->updateDraw(canvas.getDrawImage(), x, y);
 
 
         }
@@ -177,15 +154,10 @@ void CallbackMouse (int event, int x, int y, int flags, void* userdata){
     else if  ( event == EVENT_LBUTTONUP )
     {
         if(is_pressed){
-            if(shaping){
-                rectangle(drawimage, brush->getMouse(), pn, brush->getColor(), brush->getSize(), brush->getLineType());
-            } else if(circles){
-                circle(drawimage, brush->getMouse(), r, brush->getColor(), brush->getSize(), brush->getLineType());
-                r = 0;
-            }
-            brush->updateMouse(-1, -1);
-            pn.x = -1;
-            pn.y = -1;
+
+            st->draw(canvas.getDrawImage(), x, y);
+
+            st->updateTool(-1, -1);
             is_pressed = false;
         }
       //  cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;

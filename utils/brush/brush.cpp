@@ -10,6 +10,17 @@ Brush::Brush() {
     this->color = Scalar(255, 0, 0);
 }
 
+Brush Brush::copySelf(){
+    Brush b = Brush();
+    b.setColor(color);
+    b.setSize(size);
+    b.setType(lineType);
+    b.mouse.x = mouse.x;
+    b.mouse.y = mouse.y;
+
+    return b;
+}
+
 
 void Brush::updateMouse(int x, int y){
     mouse.x = x;

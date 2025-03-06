@@ -21,25 +21,27 @@ INCLUDEPATH += /usr/include/opencv4
 # QMAKE_CXXFLAGS_DEBUG += $$wxCXXFLAGS
 
 SOURCES += \
-        brush.cpp \
-        canvas.cpp \
-        circletool.cpp \
-        freedrawing.cpp \
-        imagefilter.cpp \
-        linetool.cpp \
+        utils/brush/brush.cpp \
+        utils/canvas/canvas.cpp \
+        utils/tools/circletool.cpp \
+        elements/p_element.cpp \
+        utils/tools/freedrawing.cpp \
+        utils/filters/imagefilter.cpp \
+        utils/tools/linetool.cpp \
         main.cpp \
-        rectdrawing.cpp \
-        shapetool.cpp
+        utils/tools/rectdrawing.cpp \
+        utils/tools/shapetool.cpp
 
 HEADERS += \
-    brush.h \
-    canvas.h \
-    circletool.h \
-    freedrawing.h \
-    imagefilter.h \
-    linetool.h \
-    rectdrawing.h \
-    shapetool.h
+    utils/brush/brush.h \
+    utils/canvas/canvas.h \
+    utils/tools/circletool.h \
+    elements/p_element.h \
+    utils/tools/freedrawing.h \
+    utils/filters/imagefilter.h \
+    utils/tools/linetool.h \
+    utils/tools/rectdrawing.h \
+    utils/tools/shapetool.h
 
 FORMS +=
 

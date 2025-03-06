@@ -13,6 +13,7 @@ public:
 
     //methods
     void updateMouse(int x, int y);
+    Brush copySelf();
 
     //setters
     void setColor(cv::Scalar newColor);
@@ -27,7 +28,7 @@ public:
     cv::Point getMouse();
 
     //const and vars
-    const int MAXSIZE = 100;
+    int MAXSIZE = 100;
     int* sizePointer = &size;
     cv::Scalar* colorPointer = &color;
 private:

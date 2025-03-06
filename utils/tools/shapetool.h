@@ -1,7 +1,7 @@
 #ifndef SHAPETOOL_H
 #define SHAPETOOL_H
 
-#include "brush.h"
+#include "utils/brush/brush.h"
 
 class ShapeTool
 {

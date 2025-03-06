@@ -1,14 +1,14 @@
-#include "imagefilter.h"
+#include "utils/filters/imagefilter.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 //#include "mainwindow.h"
 #include <cmath>
-#include "brush.h"
-#include "canvas.h"
-#include "freedrawing.h"
-#include "rectdrawing.h"
-#include "circletool.h"
-#include "linetool.h"
+#include "utils/brush/brush.h"
+#include "utils/canvas/canvas.h"
+#include "utils/tools/freedrawing.h"
+#include "utils/tools/rectdrawing.h"
+#include "utils/tools/circletool.h"
+#include "utils/tools/linetool.h"
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QInputDialog>
@@ -29,8 +29,6 @@ LineTool lt = LineTool(true);
 ShapeTool* st = &fd;
 
 void CallbackMouse (int event, int x, int y, int flags, void* userdata);
-
-void OnSqrButtonClick(int state, void* userdata);
 
 int main(int argc, char *argv[])
 {
@@ -148,8 +146,6 @@ void CallbackMouse (int event, int x, int y, int flags, void* userdata){
         if (is_pressed){
 
             st->updateDraw(canvas.getDrawImage(), x, y);
-
-
         }
 
     }
@@ -173,8 +169,4 @@ void CallbackMouse (int event, int x, int y, int flags, void* userdata){
       //  cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
     }
 
-}
-
-void OnSqrButtonClick(int state, void* userdata){
-    cout<<"Button state: " << state << endl;
 }

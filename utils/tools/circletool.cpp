@@ -1,4 +1,5 @@
 #include "circletool.h"
+#include "elements/circle_element.h"
 
 CircleTool::CircleTool() : ShapeTool() {}
 
@@ -12,11 +13,13 @@ void CircleTool::updateDraw(cv::Mat drawimage, int x, int y){
     }
 
 }
-void CircleTool::draw(cv::Mat drawimage, int x, int y){
+P_Element* CircleTool::draw(cv::Mat drawimage, int x, int y){
     if(drawing){
         cv::circle(drawimage, brush.getMouse(), r, brush.getColor(), brush.getSize(), brush.getLineType());
-        r = 0;
+        return new Circle_Element(brush.copySelf(), brush.getMouse(), r);
     }
+
+    return NULL;
 }
 
 void CircleTool::focus(cv::Mat image){

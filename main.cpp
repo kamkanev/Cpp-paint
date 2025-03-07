@@ -111,6 +111,16 @@ int main(int argc, char *argv[])
             st = &lt;
         }
 
+        if(key == 'z'){
+
+            canvas.undo();
+
+        } else if(key == 'y'){
+
+            canvas.redo();
+
+        }
+
         //clean
          // image = Mat(500, 500, CV_8UC3,
          //             Scalar(255, 255, 255));
@@ -153,7 +163,7 @@ void CallbackMouse (int event, int x, int y, int flags, void* userdata){
     {
         if(is_pressed){
 
-            st->draw(canvas.getDrawImage(), x, y);
+            canvas.addToHistory(st->draw(canvas.getDrawImage(), x, y));
 
             st->updateTool(-1, -1);
             is_pressed = false;

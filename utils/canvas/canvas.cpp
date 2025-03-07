@@ -3,9 +3,43 @@
 using namespace cv;
 
 Canvas::Canvas(int weight, int height, Scalar color) {
-    drawimage = Mat(weight, height, CV_8UC3,
+    baseimage = Mat(weight, height, CV_8UC3,
                     color);
-    drawimage.copyTo(image);
+    baseimage.copyTo(image);
+    baseimage.copyTo(drawimage);
+}
+
+void Canvas::addToHistory(P_Element* element){
+    if(!future.empty()){
+        future = std::stack<P_Element*>();
+    }
+    history.push(element);
+}
+
+void Canvas::undo(){
+    if(history.empty()){
+        return;
+    }
+    future.push(history.top());
+    history.pop();
+
+    baseimage.copyTo(image);
+    baseimage.copyTo(drawimage);
+
+    std::stack<P_Element*> stk_copy(history);
+    while(!stk_copy.empty()) {
+        stk_copy.top()->rebuild(drawimage, image);
+        stk_copy.pop();
+    }
+}
+
+void Canvas::redo(){
+    if(future.empty()){
+        return;
+    }
+    history.push(future.top());
+    future.top()->rebuild(drawimage, image);
+    future.pop();
 }
 
 void Canvas::update(){

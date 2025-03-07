@@ -21,6 +21,10 @@ INCLUDEPATH += /usr/include/opencv4
 # QMAKE_CXXFLAGS_DEBUG += $$wxCXXFLAGS
 
 SOURCES += \
+        elements/circle_element.cpp \
+        elements/line_element.cpp \
+        elements/poly_element.cpp \
+        elements/rect_element.cpp \
         utils/brush/brush.cpp \
         utils/canvas/canvas.cpp \
         utils/tools/circletool.cpp \
@@ -33,6 +37,10 @@ SOURCES += \
         utils/tools/shapetool.cpp
 
 HEADERS += \
+    elements/circle_element.h \
+    elements/line_element.h \
+    elements/poly_element.h \
+    elements/rect_element.h \
     utils/brush/brush.h \
     utils/canvas/canvas.h \
     utils/tools/circletool.h \

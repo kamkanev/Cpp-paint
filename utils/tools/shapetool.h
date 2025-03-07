@@ -2,6 +2,7 @@
 #define SHAPETOOL_H
 
 #include "utils/brush/brush.h"
+#include "elements/p_element.h"
 
 class ShapeTool
 {
@@ -10,7 +11,7 @@ public:
     ShapeTool(bool state);
 
     void updateTool(int x, int y);
-    virtual void draw(cv::Mat drawimage, int x, int y) = 0;
+    virtual P_Element* draw(cv::Mat drawimage, int x, int y) = 0;
     virtual void updateDraw(cv::Mat drawimage, int x, int y) = 0;
     virtual void focus(cv::Mat image)= 0;
 

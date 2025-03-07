@@ -2,7 +2,7 @@
 #define FREEDRAWING_H
 
 #include "shapetool.h"
-#include "elements/poly_element.h"
+#include <vector>
 
 class FreeDrawing : public ShapeTool
 {
@@ -13,7 +13,7 @@ public:
     void updateDraw(cv::Mat drawimage, int x, int y);
     void focus(cv::Mat image);
 private:
-    Poly_Element resPointer;
+    std::vector<cv::Point2i> points;
 };
 
 #endif // FREEDRAWING_H

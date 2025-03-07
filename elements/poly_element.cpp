@@ -1,8 +1,8 @@
 #include "poly_element.h"
 
-
-Poly_Element::Poly_Element(){}
-Poly_Element::Poly_Element(Brush b, cv::Point_<int> p) : P_Element(b, p) {}
+Poly_Element::Poly_Element(Brush b, cv::Point_<int> p, std::vector<cv::Point2i> points) : P_Element(b, p) {
+    this->points = std::vector<cv::Point2i>(points);
+}
 
 void Poly_Element::rebuild(cv::Mat drawImage, cv::Mat image){
     for(int i = 0; i < points.size(); i++){

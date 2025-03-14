@@ -9,6 +9,8 @@ This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/
 - Drawing using diffent brushes.
 
 - Drawing shapes (such as squares, circles, ect.)
+  
+  - Each shape tool has it's own brush
 
 - Text writing
 
@@ -18,23 +20,17 @@ This is an image editor/ paint made on **C++** with [opencv](https://opencv.org/
 
 - Others
   
-  <img title="" src="./screenshots/free_draw.png" alt="drawing" width="198"><img title="" src="./screenshots/square.png" alt="squaredrawing" width="196" data-align="inline"><img title="" src="screenshots/circle.png" alt="circles" width="198">
+  <img title="" src="./screenshots/free_draw.png" alt="drawing" width="245"><img title="" src="./screenshots/square.png" alt="squaredrawing" width="208" data-align="inline"><img title="" src="screenshots/circle.png" alt="circles" width="223">
 
 ## Key commands
 
-`1` changes to **free drawing**
+`Ctrl + Z` changes to **free drawing**
 
-`2` changes to the **square tool**
+`Ctrl + Y` changes to the **square tool**
 
-`3` changes to the **circle tool**
+`RGB btn` opens the color picker dialog to **choose a color**
 
-`r` changes the color to **red**
-
-`b` chnages the color to **blue**
-
-`esc` exits the application (alco CTRL + C in terminal)
-
-and the tracker on top of the window is for the **brush size**.
+`Tool btn's` changes the **drawing tool** (*Free drawing, rectangles, lines, circles*).
 
 ## Setup
 

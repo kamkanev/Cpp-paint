@@ -21,6 +21,7 @@
 #include <string>
 
 #include <gui/qcanvas.h>
+#include "include/QtColorWidgets/ColorDialog"
 
 class SimpleWindow : public QWidget
 {
@@ -52,6 +53,10 @@ protected:
     QPushButton* rdBtn = new QPushButton("Rect");
     QPushButton* clBtn = new QPushButton("Circle");
     QPushButton* ltBtn = new QPushButton("Line");
+    QPushButton* rgbBtn = new QPushButton("RGB");
+
+
+    color_widgets::ColorDialog* clrPick = new color_widgets::ColorDialog(this);
 
 private slots:
     void update(){
@@ -67,6 +72,13 @@ private slots:
 
     void redo(){
         canvas.redo();
+    }
+
+    void changeColor(QColor color){
+        qDebug() << color.red() << " " << fd.getBrush().getColor().val;
+        int r, g, b;
+        color.getRgb(&r, &g, &b);
+        st->brushPointer->setColor(cv::Scalar(b,g,r));
     }
 
     void changeTool(bool clicked){
@@ -88,7 +100,7 @@ private slots:
                 st = &lt;
             }
 
-            qDebug() << buttonWidget ->text() << " " << fdBtn->text();
+            // qDebug() << buttonWidget ->text() << " " << fdBtn->text();
         }
 
     }

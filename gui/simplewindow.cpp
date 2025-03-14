@@ -23,6 +23,8 @@ SimpleWindow::SimpleWindow(QWidget *parent)
     QImage qim = SimpleWindow::MatToQPixmap(canvas.getImage());
     noteLabel->setPixmap(QPixmap::fromImage(qim));
 
+    noteLabel->setStyleSheet("border: 1px solid black");
+
     connect(noteLabel, &QCanvas::mousePressed, this, &SimpleWindow::onMousePressed);
     connect(noteLabel, &QCanvas::mouseMoved, this, &SimpleWindow::onMouseMoved);
     connect(noteLabel, &QCanvas::mouseReleased, this, &SimpleWindow::onMouseReleased);
@@ -40,10 +42,18 @@ SimpleWindow::SimpleWindow(QWidget *parent)
     drawbtns->addWidget(clBtn);
     drawbtns->addWidget(ltBtn);
 
+    drawbtns->addWidget(rgbBtn);
+
+
     connect(fdBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
     connect(rdBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
     connect(clBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
     connect(ltBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
+    connect(clrPick, &color_widgets::ColorDialog::colorSelected, this, &SimpleWindow::changeColor);
+
+    connect(rgbBtn, &QPushButton::clicked, [=]{
+        clrPick->show();
+    });
 
     connect(scRedo, SIGNAL(activated()), this, SLOT(redo()));
     connect(scUndo, SIGNAL(activated()), this, SLOT(undo()));

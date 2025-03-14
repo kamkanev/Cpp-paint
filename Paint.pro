@@ -25,6 +25,8 @@ SOURCES += \
         elements/line_element.cpp \
         elements/poly_element.cpp \
         elements/rect_element.cpp \
+        gui/qcanvas.cpp \
+        gui/simplewindow.cpp \
         utils/brush/brush.cpp \
         utils/canvas/canvas.cpp \
         utils/tools/circletool.cpp \
@@ -41,6 +43,8 @@ HEADERS += \
     elements/line_element.h \
     elements/poly_element.h \
     elements/rect_element.h \
+    gui/qcanvas.h \
+    gui/simplewindow.h \
     utils/brush/brush.h \
     utils/canvas/canvas.h \
     utils/tools/circletool.h \

@@ -11,12 +11,15 @@
 #include <QGuiApplication>  // For QGuiApplication
 #include <QApplication>  // For QGuiApplication
 #include <QTimer>
+#include <QMenuBar>
 
 #include "gui/qcanvas.h"
 
 SimpleWindow::SimpleWindow(QWidget *parent)
     : QWidget(parent)
 {
+
+    qbar = new QMenuBar(this);
 
     auto outer = new QVBoxLayout(this);
 
@@ -25,9 +28,7 @@ SimpleWindow::SimpleWindow(QWidget *parent)
 
     noteLabel->setStyleSheet("border: 1px solid black");
 
-    connect(noteLabel, &QCanvas::mousePressed, this, &SimpleWindow::onMousePressed);
-    connect(noteLabel, &QCanvas::mouseMoved, this, &SimpleWindow::onMouseMoved);
-    connect(noteLabel, &QCanvas::mouseReleased, this, &SimpleWindow::onMouseReleased);
+
 
     outer->addWidget(noteLabel);
 
@@ -45,35 +46,100 @@ SimpleWindow::SimpleWindow(QWidget *parent)
     drawbtns->addWidget(rgbBtn);
 
 
-    connect(fdBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
-    connect(rdBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
-    connect(clBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
-    connect(ltBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
-    connect(clrPick, &color_widgets::ColorDialog::colorSelected, this, &SimpleWindow::changeColor);
+
 
     connect(rgbBtn, &QPushButton::clicked, [=]{
         clrPick->show();
     });
 
-    connect(scRedo, SIGNAL(activated()), this, SLOT(redo()));
-    connect(scUndo, SIGNAL(activated()), this, SLOT(undo()));
+
 
     auto inner = new QHBoxLayout;
     outer->addLayout(inner);
 
     inner->addLayout(btncols);
 
-    auto clearBtn = new QPushButton("Clear");
-    inner->addWidget(clearBtn);
+    // auto clearBtn = new QPushButton("Clear");
+    // inner->addWidget(clearBtn);
 
-    auto saveBtn = new QPushButton("Save");
-    inner->addWidget(saveBtn);
+    // auto saveBtn = new QPushButton("Save");
+    // inner->addWidget(saveBtn);
+    createActions();
+    createMenus();
 
 
     QTimer *timer = new QTimer(noteLabel);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(10);
 
+}
+
+void SimpleWindow::createMenus(){
+
+
+
+    fileMenu = new QMenu(tr("&File"), qbar);
+
+    newAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentNew),
+                         tr("&New"), this);
+    newAct->setShortcuts(QKeySequence::New);
+    newAct->setStatusTip(tr("Create a new file"));
+    connect(newAct, &QAction::triggered, this, &SimpleWindow::newFile);
+
+    saveAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentSave),
+                         tr("&Save"), this);
+    saveAct->setShortcuts(QKeySequence::Save);
+    saveAct->setStatusTip(tr("Save current file"));
+    connect(saveAct, &QAction::triggered, this, &SimpleWindow::saveFile);
+
+    exitAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::WindowClose),
+                          tr("&Exit"), this);
+    exitAct->setShortcuts(QKeySequence::Close);
+    exitAct->setStatusTip(tr("Exit"));
+    connect(exitAct, &QAction::triggered, this, &SimpleWindow::exitWindow);
+
+    fileMenu->addAction(newAct);
+    fileMenu->addAction(openAct);
+    fileMenu->addAction(saveAct);
+    fileMenu->addSeparator();
+    fileMenu->addAction(exitAct);
+
+    qbar->addMenu(fileMenu);
+
+    editMenu = new QMenu(tr("&Edit"), qbar);
+
+    undoAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::EditUndo),
+                         tr("&Undo"), this);
+    undoAct->setShortcuts(QKeySequence::Undo);
+    undoAct->setStatusTip(tr("Undo an action"));
+    connect(undoAct, &QAction::triggered, this, &SimpleWindow::undo);
+
+    redoAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::EditRedo),
+                         tr("&Redo"), this);
+    redoAct->setShortcuts(QKeySequence::Redo);
+    redoAct->setStatusTip(tr("Redo an action"));
+    connect(redoAct, &QAction::triggered, this, &SimpleWindow::redo);
+
+    editMenu->addAction(undoAct);
+    editMenu->addAction(redoAct);
+
+    qbar->addMenu(editMenu);
+
+}
+
+void SimpleWindow::createActions(){
+    connect(noteLabel, &QCanvas::mousePressed, this, &SimpleWindow::onMousePressed);
+    connect(noteLabel, &QCanvas::mouseMoved, this, &SimpleWindow::onMouseMoved);
+    connect(noteLabel, &QCanvas::mouseReleased, this, &SimpleWindow::onMouseReleased);
+
+    connect(fdBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
+    connect(rdBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
+    connect(clBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
+    connect(ltBtn, &QPushButton::clicked, this, &SimpleWindow::changeTool);
+    connect(clrPick, &color_widgets::ColorDialog::colorSelected, this, &SimpleWindow::changeColor);
+
+    // connect(scRedo, SIGNAL(activated()), this, SLOT(redo()));
+    // connect(scUndo, SIGNAL(activated()), this, SLOT(undo()));
 }
 
 QImage SimpleWindow::MatToQPixmap(const cv::Mat &image) {

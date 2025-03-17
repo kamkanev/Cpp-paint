@@ -77,3 +77,9 @@ You can also open the project in [Qt](https://www.qt.io/download) and run it fro
 #### Windows and Mac
 
 For now you can only open and run the project in [Qt](https://www.qt.io/download).
+
+
+
+## References
+
+[Glax / Qt-Color-Widgets · GitLab](https://gitlab.com/mattbas/Qt-Color-Widgets)

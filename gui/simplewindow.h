@@ -17,6 +17,7 @@
 #include <QMouseEvent>
 #include <QShortcut>
 #include <QPushButton>
+#include <QMenuBar>
 
 #include <string>
 
@@ -46,8 +47,8 @@ protected:
     // QShortcut *scCircleTool = new QShortcut(QKeySequence("Ctrl+Shift+C"), this);
     // QShortcut *scLineTool = new QShortcut(QKeySequence("Ctrl+Shift+L"), this);
 
-    QShortcut *scUndo = new QShortcut(QKeySequence("Ctrl+Z"), this);
-    QShortcut *scRedo = new QShortcut(QKeySequence("Ctrl+Y"), this);
+    // QShortcut *scUndo = new QShortcut(QKeySequence("Ctrl+Z"), this);
+    // QShortcut *scRedo = new QShortcut(QKeySequence("Ctrl+Y"), this);
 
     QPushButton* fdBtn = new QPushButton("Free");
     QPushButton* rdBtn = new QPushButton("Rect");
@@ -57,6 +58,23 @@ protected:
 
 
     color_widgets::ColorDialog* clrPick = new color_widgets::ColorDialog(this);
+
+    QMenuBar *qbar;
+
+    QMenu *fileMenu;
+    QMenu *editMenu;
+    QMenu *helpMenu;
+
+    QAction *newAct;
+    QAction *openAct;
+    QAction *saveAct;
+    QAction *exitAct;
+    QAction *undoAct;
+    QAction *redoAct;
+
+private:
+    void createMenus();
+    void createActions();
 
 private slots:
     void update(){
@@ -75,7 +93,7 @@ private slots:
     }
 
     void changeColor(QColor color){
-        qDebug() << color.red() << " " << fd.getBrush().getColor().val;
+        //qDebug() << color.red() << " " << fd.getBrush().getColor().val;
         int r, g, b;
         color.getRgb(&r, &g, &b);
         st->brushPointer->setColor(cv::Scalar(b,g,r));
@@ -91,7 +109,7 @@ private slots:
             if(buttonWidget->text().toStdString() == "Free"){
                 st = &fd;
 
-                qDebug() << buttonWidget ->text();
+                //qDebug() << buttonWidget ->text();
             } else if(buttonWidget->text().toStdString() == "Rect"){
                 st = &rd;
             }else if(buttonWidget->text().toStdString() == "Circle"){
@@ -120,6 +138,20 @@ private slots:
         // qDebug() << "Mouse Released at:" << event->pos();
         canvas.addToHistory(st->draw(canvas.getDrawImage(), event->pos().x(), event->pos().y()));
         st->updateTool(-1, -1);
+    }
+
+    void newFile(){
+        //activate dialog window
+        canvas = Canvas(500, 500, cv::Scalar(255, 255, 255));
+    }
+
+    void saveFile(){
+        //dialog where to save
+        imwrite("test.jpg", canvas.getImage());
+    }
+
+    void exitWindow(){
+        this->close();
     }
 };
 

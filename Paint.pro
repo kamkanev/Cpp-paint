@@ -25,6 +25,7 @@ SOURCES += \
         elements/line_element.cpp \
         elements/poly_element.cpp \
         elements/rect_element.cpp \
+        gui/dialog/newdielog.cpp \
         gui/qcanvas.cpp \
         gui/simplewindow.cpp \
         utils/brush/brush.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     elements/line_element.h \
     elements/poly_element.h \
     elements/rect_element.h \
+    gui/dialog/newdielog.h \
     gui/qcanvas.h \
     gui/simplewindow.h \
     utils/brush/brush.h \

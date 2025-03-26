@@ -155,6 +155,8 @@ private slots:
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         "",
                                                         "Images (*.png *.xpm *.jpg)");
+        //TODO: check if fileName contains corect sufix (.png e.g.)
+        //Now error is given and closes everything - to fix
 
         if(!fileName.isNull() && !fileName.isEmpty()){
             imwrite(fileName.toStdString(), canvas.getImage());

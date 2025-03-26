@@ -18,6 +18,7 @@
 #include <QShortcut>
 #include <QPushButton>
 #include <QMenuBar>
+#include <QFileDialog>
 
 #include <string>
 
@@ -147,7 +148,13 @@ private slots:
 
     void saveFile(){
         //dialog where to save
-        imwrite("test.jpg", canvas.getImage());
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                        "",
+                                                        "Images (*.png *.xpm *.jpg)");
+
+        imwrite(fileName.toStdString(), canvas.getImage());
+
     }
 
     void exitWindow(){

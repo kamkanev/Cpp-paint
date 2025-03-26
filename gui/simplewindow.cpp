@@ -18,6 +18,7 @@
 SimpleWindow::SimpleWindow(QWidget *parent)
     : QWidget(parent)
 {
+    setTools();
 
     qbar = new QMenuBar(this);
 
@@ -72,6 +73,13 @@ SimpleWindow::SimpleWindow(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(10);
 
+}
+
+void SimpleWindow::setTools(){
+    fd.brushPointer = brush;
+    rd.brushPointer = brush;
+    cl.brushPointer = brush;
+    lt.brushPointer = brush;
 }
 
 void SimpleWindow::createMenus(){

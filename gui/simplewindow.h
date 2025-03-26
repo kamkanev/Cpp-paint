@@ -36,6 +36,8 @@ protected:
     Canvas canvas = Canvas(500, 500, cv::Scalar(255, 255, 255));
     QCanvas* noteLabel = new QCanvas(this);
 
+    Brush* brush = new Brush();
+
     FreeDrawing fd = FreeDrawing(true);
     RectDrawing rd = RectDrawing(true);
     CircleTool cl = CircleTool(true);
@@ -76,6 +78,7 @@ protected:
 private:
     void createMenus();
     void createActions();
+    void setTools();
 
 private slots:
     void update(){
@@ -94,10 +97,10 @@ private slots:
     }
 
     void changeColor(QColor color){
-        //qDebug() << color.red() << " " << fd.getBrush().getColor().val;
+        // qDebug() << color.red() << " " << fd.getBrush().getColor().val;
         int r, g, b;
         color.getRgb(&r, &g, &b);
-        st->brushPointer->setColor(cv::Scalar(b,g,r));
+        brush->setColor(cv::Scalar(b,g,r));
     }
 
     void changeTool(bool clicked){
@@ -153,7 +156,9 @@ private slots:
                                                         "",
                                                         "Images (*.png *.xpm *.jpg)");
 
-        imwrite(fileName.toStdString(), canvas.getImage());
+        if(!fileName.isNull() && !fileName.isEmpty()){
+            imwrite(fileName.toStdString(), canvas.getImage());
+        }
 
     }
 

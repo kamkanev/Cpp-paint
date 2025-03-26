@@ -10,7 +10,7 @@ ShapeTool::ShapeTool(bool  state) {
 }
 
 void ShapeTool::updateTool(int x, int y){
-    brush.updateMouse(x, y);
+    brushPointer->updateMouse(x, y);
     pn.x = x;
     pn.y = y;
 }

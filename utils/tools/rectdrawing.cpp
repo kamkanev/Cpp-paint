@@ -12,17 +12,17 @@ void RectDrawing::updateDraw(cv::Mat drawimage, int x, int y){
 
 P_Element* RectDrawing::draw(cv::Mat drawimage, int x, int y){
     if(drawing){
-        rectangle(drawimage, brush.getMouse(), pn,
-                  brush.getColor(), brush.getSize(), brush.getLineType());
-        return new Rect_Element(brush.copySelf(), brush.getMouse(), pn);
+        rectangle(drawimage, brushPointer->getMouse(), pn,
+                  brushPointer->getColor(), brushPointer->getSize(), brushPointer->getLineType());
+        return new Rect_Element(brushPointer->copySelf(), brushPointer->getMouse(), pn);
     }
     return NULL;
 }
 
 void RectDrawing::focus(cv::Mat image){
-    if(drawing && brush.getMouse().x != -1){
-        cv::rectangle(image, brush.getMouse(), pn,
-                      brush.getColor(),
-                      brush.getSize(), brush.getLineType());
+    if(drawing && brushPointer->getMouse().x != -1){
+        cv::rectangle(image, brushPointer->getMouse(), pn,
+                      brushPointer->getColor(),
+                      brushPointer->getSize(), brushPointer->getLineType());
     }
 }

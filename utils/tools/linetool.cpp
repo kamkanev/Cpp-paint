@@ -12,18 +12,18 @@ void LineTool::updateDraw(cv::Mat drawimage, int x, int y){
 }
 P_Element* LineTool::draw(cv::Mat drawimage, int x, int y){
     if(drawing){
-        line(drawimage, brush.getMouse(), pn, brush.getColor(), brush.getSize(), brush.getLineType());
-        //brush.updateMouse(pn.x, pn.y);
-        return new Line_Element(brush.copySelf(), brush.getMouse(), pn);
+        line(drawimage, brushPointer->getMouse(), pn, brushPointer->getColor(), brushPointer->getSize(), brushPointer->getLineType());
+        //brushPointer->updateMouse(pn.x, pn.y);
+        return new Line_Element(brushPointer->copySelf(), brushPointer->getMouse(), pn);
     }
 
     return NULL;
 }
 
 void LineTool::focus(cv::Mat image){
-    if(drawing && brush.getMouse().x != -1){
-        cv::line(image, brush.getMouse(), pn,
-                      brush.getColor(),
-                      brush.getSize(), brush.getLineType());
+    if(drawing && brushPointer->getMouse().x != -1){
+        cv::line(image, brushPointer->getMouse(), pn,
+                      brushPointer->getColor(),
+                      brushPointer->getSize(), brushPointer->getLineType());
     }
 }

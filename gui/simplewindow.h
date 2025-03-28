@@ -20,8 +20,6 @@
 #include <QMenuBar>
 #include <QFileDialog>
 
-#include <string>
-
 #include <gui/qcanvas.h>
 #include "include/QtColorWidgets/ColorDialog"
 

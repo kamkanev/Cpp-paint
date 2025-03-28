@@ -20,6 +20,10 @@ SimpleWindow::SimpleWindow(QWidget *parent)
 {
     setTools();
 
+    setWindowTitle(tr("Stormflare v0.0.1a"));
+    setWindowIcon(QIcon("resources/Logo/StormflareLogo.png"));
+    setWindowIconText(tr("Stormflare v0.0.1a"));
+
     qbar = new QMenuBar(this);
 
     auto outer = new QVBoxLayout(this);
@@ -28,7 +32,6 @@ SimpleWindow::SimpleWindow(QWidget *parent)
     noteLabel->setPixmap(QPixmap::fromImage(qim));
 
     noteLabel->setStyleSheet("border: 1px solid black");
-
 
 
     outer->addWidget(noteLabel);
@@ -45,8 +48,6 @@ SimpleWindow::SimpleWindow(QWidget *parent)
     drawbtns->addWidget(ltBtn);
 
     drawbtns->addWidget(rgbBtn);
-
-
 
 
     connect(rgbBtn, &QPushButton::clicked, [=]{

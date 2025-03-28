@@ -9,8 +9,8 @@ CONFIG += console c++17
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv4
 
-INCLUDEPATH += /usr/include/opencv4
-#INCLUDEPATH += /home/kamen/miniconda3/include/opencv4/opencv2
+INCLUDEPATH += usr/include/opencv4
+INCLUDEPATH += /home/kamen/miniconda3/include/opencv4/opencv2
 
 #LIBS += -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
 
@@ -19,6 +19,7 @@ INCLUDEPATH += /usr/include/opencv4
 # LIBS += $$wxLinkOptions
 # QMAKE_CXXFLAGS_RELEASE += $$wxCXXFLAGS
 # QMAKE_CXXFLAGS_DEBUG += $$wxCXXFLAGS
+
 
 SOURCES += \
         elements/circle_element.cpp \

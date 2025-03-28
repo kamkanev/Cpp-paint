@@ -6,7 +6,7 @@
 
 class NewDielog
 {
-    Q_OBJECT
+    //Q_OBJECT
 public:
     NewDielog();
 };
